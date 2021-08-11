@@ -127,25 +127,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOME SCREEN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmg-5h-658">
-                                <rect key="frame" x="128.5" y="323" width="118" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eTy-EL-Ntd">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8fv-xk-zNa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Bmg-5h-658" firstAttribute="centerY" secondItem="YIh-84-pcZ" secondAttribute="centerY" id="c6V-f1-1cU"/>
-                            <constraint firstItem="Bmg-5h-658" firstAttribute="centerX" secondItem="YIh-84-pcZ" secondAttribute="centerX" id="f4r-17-gnu"/>
+                            <constraint firstItem="eTy-EL-Ntd" firstAttribute="trailing" secondItem="8fv-xk-zNa" secondAttribute="trailing" id="M7Z-eY-BJV"/>
+                            <constraint firstItem="eTy-EL-Ntd" firstAttribute="top" secondItem="8fv-xk-zNa" secondAttribute="top" id="eM4-xw-3ET"/>
+                            <constraint firstItem="eTy-EL-Ntd" firstAttribute="bottom" secondItem="8fv-xk-zNa" secondAttribute="bottom" id="qWB-bd-588"/>
+                            <constraint firstItem="eTy-EL-Ntd" firstAttribute="leading" secondItem="8fv-xk-zNa" secondAttribute="leading" id="yuP-Ka-UBm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="80G-pF-YHt"/>
+                    <connections>
+                        <outlet property="tableView" destination="eTy-EL-Ntd" id="Uly-B1-6Q7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WrF-hO-uiN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2753" y="125"/>
+            <point key="canvasLocation" x="2752.8000000000002" y="124.58770614692655"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r3o-nM-oyB">
@@ -173,6 +176,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

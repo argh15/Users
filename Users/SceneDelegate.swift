@@ -50,6 +50,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     
+    /// This function will set the root view based on the logged in status
+    ///
+    /// If we have the token, we will set the root to HomeVC else to LoginVC
+    ///
+    /// - Parameter window: Window of the application
     func setRootView(_ window: UIWindow?) {
         if UserDefaults.standard.getIsLoggedIn() {
             if let home = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: HomeViewController.identifier) as? HomeViewController {
@@ -65,7 +70,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func setRootViewController(_ vc: UIViewController, _ userId: Int? = nil) {
+    
+    /// This function will set the rootVC when we log out or login
+    ///
+    /// - Parameter vc: UIViewController to be set as root.
+    func setRootViewController(_ vc: UIViewController) {
         if let window = self.window {
             let nav = UINavigationController(rootViewController: vc)
             window.rootViewController = nav

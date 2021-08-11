@@ -14,6 +14,9 @@ class ActivityIndicator: UIView {
     
     private var activityView: UIActivityIndicatorView?
     
+    /// This function will show the activity indicator
+    ///
+    /// - Parameter superview: UIViewController on top of which we have to show the activity indicator.
     func showActivityIndicator(_ superView: UIViewController) {
         activityView = UIActivityIndicatorView(style: .large)
         activityView?.center = superView.view.center
@@ -21,6 +24,7 @@ class ActivityIndicator: UIView {
         activityView?.startAnimating()
     }
 
+    /// This function will hide the activity indicator.
     func hideActivityIndicator(){
         if (activityView != nil){
             activityView?.stopAnimating()

@@ -10,8 +10,14 @@ import UIKit
 class AlertView: UIViewController {
     static let sharedInstance = AlertView()
     
-    var window = UIApplication.shared.windows.first { $0.isKeyWindow }
+    private var window = UIApplication.shared.windows.first { $0.isKeyWindow }
     
+    /// This function will show alert.
+    ///
+    /// - Parameters:
+    ///     - header: Header of the alert
+    ///     - message: Body of the alert
+    ///     - actionTitle: Button Text of the alert
     func showAlert(header: String, message: String, actionTitle: String) {
         
         var topViewController = self.window?.rootViewController

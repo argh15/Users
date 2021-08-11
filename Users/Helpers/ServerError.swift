@@ -14,6 +14,11 @@ struct ServerError {
     var errorCode: Int
     var errorMessage: String?
 
+    /// This is the init for Server Error
+    ///
+    /// - Parameters:
+    ///     - err: NSError Object
+    ///     - customErrorMessage: Error Message
     init(err:NSError, customErrorMessage: String? = nil) {
         self.error = err
         self.errorCode = err.code
@@ -25,8 +30,8 @@ struct ServerError {
         }
     }
     
+    /// This function will set the custom error message
     mutating func setUserMessage() {
-
         switch self.errorCode {
             case 0:
                 self.errorMessage = StringConstants.defaultError

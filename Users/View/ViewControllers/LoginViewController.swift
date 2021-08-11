@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
@@ -16,7 +16,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //to handle keyboard when tapped on screen
         hideKeyboardWhenTappedAround()
+        
+        //delegates for UITextField
         emailText.delegate = self
         passwordText.delegate = self
         
@@ -25,15 +28,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    /// This function registers ViewModels.
+    ///
+    /// Handles the success and failure cases for the API calls.
     func registerViewModelListeners() {
-        
         viewModel.isLoginSuccess.bind { [self] success in
             if success {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
                 openHomeScreen()
             } else {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                AlertView.sharedInstance.showAlert(header: "Login Failed", message: viewModel.errorMessage, actionTitle: "Ok")
+                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: viewModel.errorMessage, actionTitle: StringConstants.okTitle)
             }
         }
     }
@@ -42,6 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         validateAndLogin()
     }
     
+    /// This function will perform validations in the text field and hence initiate login flow
     func validateAndLogin() {
         guard let email = emailText.text, let password = passwordText.text else {
             return
@@ -52,13 +58,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 ActivityIndicator.sharedInstance.showActivityIndicator(self)
                 viewModel.performLogin(viewModel.createLoginBody(email, password))
             } else {
-                AlertView.sharedInstance.showAlert(header: "Error", message: "Password entered is wrong", actionTitle: "Ok")
+                AlertView.sharedInstance.showAlert(header: StringConstants.defaultErrorHeader, message: StringConstants.passwordWrong, actionTitle: StringConstants.okTitle)
             }
         } else {
-            AlertView.sharedInstance.showAlert(header: "Error", message: "Email/Password is/are empty", actionTitle: "Ok")
+            AlertView.sharedInstance.showAlert(header: StringConstants.defaultErrorHeader, message: StringConstants.blankFields, actionTitle: StringConstants.okTitle)
         }
     }
     
+    /// This function will open the home screen.
     func openHomeScreen() {
         if let homeVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: HomeViewController.identifier) as? HomeViewController {
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.setRootViewController(homeVC)
@@ -67,7 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
 }
 
-extension LoginViewController {
+extension LoginViewController: UITextFieldDelegate {
     
     /// To move to next text field
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
