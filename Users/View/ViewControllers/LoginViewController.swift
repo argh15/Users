@@ -32,13 +32,13 @@ class LoginViewController: UIViewController {
     ///
     /// Handles the success and failure cases for the API calls.
     func registerViewModelListeners() {
-        viewModel.isLoginSuccess.bind { [self] success in
+        viewModel.isLoginSuccess.bind { [weak self] success in
             if success {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                openHomeScreen()
+                self?.openHomeScreen()
             } else {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: viewModel.errorMessage, actionTitle: StringConstants.okTitle)
+                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: self?.viewModel.errorMessage ?? StringConstants.defaultError, actionTitle: StringConstants.okTitle)
             }
         }
     }
