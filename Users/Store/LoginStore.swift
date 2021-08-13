@@ -7,13 +7,9 @@
 
 import Foundation
 
-class LoginStore: NSObject {
+class LoginStore {
     
-    static let sharedInstance = LoginStore()
-    
-    private override init() {
-        super.init()
-    }
+    let service = NetworkService()
     
     /// This function will make the login request
     ///
@@ -22,7 +18,7 @@ class LoginStore: NSObject {
     ///        - callback: A callback  with the parameters `result` having the token and `error` which is a ServerError object.
     ///        - body: Dictionary object containing email and password.
     func performLogin(_ body: Dictionary<String, String>?, callback:@escaping (_ result: String?, _ error:ServerError?) -> Void) {
-        NetworkService.sharedInstance.post(withBaseURL: NetworkConstants.loginAPI, body: body) {
+        service.post(withBaseURL: NetworkConstants.loginAPI, body: body) {
             (result, error) in
             if error == nil {
                 if let resultDict = result as? [String: Any] {

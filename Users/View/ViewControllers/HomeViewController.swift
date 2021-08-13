@@ -11,7 +11,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var viewModel = HomeViewModel()
+    let viewModel = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,13 +62,13 @@ class HomeViewController: UIViewController {
     ///
     /// Handles the success and failure cases for the API calls.
     func registerViewModelListeners() {
-        viewModel.isFetchUsersSuccess.bind { [self] success in
+        viewModel.isFetchUsersSuccess.bind { [weak self] success in
             if success {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                tableView.reloadData()
+                self?.tableView.reloadData()
             } else {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: viewModel.errorMessage, actionTitle: StringConstants.okTitle)
+                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: self?.viewModel.errorMessage ?? StringConstants.defaultError, actionTitle: StringConstants.okTitle)
             }
         }
     }
@@ -82,7 +82,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UsersInfoTableViewCell.identifier) as? UsersInfoTableViewCell else{
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UsersInfoTableViewCell.identifier) as? UsersInfoTableViewCell else {
             return UITableViewCell()
         }
         guard let data = viewModel.usersData else {
