@@ -7,9 +7,9 @@
 
 import Foundation
 
-class LoginViewModel {
+class LoginViewModel: NSObject {
     
-    var isLoginSuccess: Dynamic<Bool> = Dynamic(false)
+    @objc dynamic var isLoginSuccess: Bool = false
     var token = ""
     var errorMessage = ""
     
@@ -28,11 +28,11 @@ class LoginViewModel {
                 if let token = result {
                     self.token = token
                     UserDefaults.standard.setIsLoggedIn(true)
-                    isLoginSuccess.value = true
+                    isLoginSuccess = true
                 }
             } else {
                 errorMessage = error?.errorMessage ?? StringConstants.defaultError
-                isLoginSuccess.value = false
+                isLoginSuccess = false
             }
         }
     }
