@@ -8,11 +8,12 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     let viewModel = LoginViewModel()
+    var kvoToken: NSKeyValueObservation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,26 +24,29 @@ class LoginViewController: UIViewController {
         emailText.delegate = self
         passwordText.delegate = self
         
-        registerViewModelListeners()
+        observe(viewModel: viewModel)
         
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    /// This function registers ViewModels.
-    ///
-    /// Handles the success and failure cases for the API calls.
-    func registerViewModelListeners() {
-        viewModel.isLoginSuccess.bind { [weak self] success in
-            if success {
+
+    func observe(viewModel: LoginViewModel) {
+        kvoToken = viewModel.observe(\.isLoginSuccess, options: .new) { (_, change) in
+            guard let isSuccess = change.newValue else { return }
+            if isSuccess {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                self?.openHomeScreen()
+                self.openHomeScreen()
             } else {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: self?.viewModel.errorMessage ?? StringConstants.defaultError, actionTitle: StringConstants.okTitle)
+                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: self.viewModel.errorMessage , actionTitle: StringConstants.okTitle)
             }
         }
     }
-
+    
+    deinit {
+        kvoToken?.invalidate()
+    }
+    
     @IBAction func loginAction(_ sender: Any) {
         validateAndLogin()
     }
