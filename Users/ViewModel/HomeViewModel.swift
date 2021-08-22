@@ -12,6 +12,7 @@ class HomeViewModel {
     var isFetchUsersSuccess: Dynamic<Bool> = Dynamic(false)
     var usersData: [UserInfoModel]?
     var errorMessage = ""
+    var manager = HomeManager()
     
     /// This function fetches the users data from the service.
     ///
@@ -20,16 +21,16 @@ class HomeViewModel {
     /// if error nil, set data to class variable and set isFetchUsersSuccess to true
     /// if error not nil, set error message and set isFetchUsersSuccess to false
     func fetchUsers() {
-        HomeManager.sharedInstance.fetchUsers() { [self]
+        manager.fetchUsers() { [weak self]
             (result, error)  in
             if error == nil {
                 if let data = result?.data {
-                    usersData = data
+                    self?.usersData = data
                 }
-                isFetchUsersSuccess.value = true
+                self?.isFetchUsersSuccess.value = true
             } else {
-                errorMessage = error?.errorMessage ?? StringConstants.defaultError
-                isFetchUsersSuccess.value = false
+                self?.errorMessage = error?.errorMessage ?? StringConstants.defaultError
+                self?.isFetchUsersSuccess.value = false
             }
         }
     }

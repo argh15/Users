@@ -7,13 +7,9 @@
 
 import Foundation
 
-class LoginManager: NSObject {
+class LoginManager {
     
-    static let sharedInstance = LoginManager()
-    
-    private override init() {
-        super.init()
-    }
+    let store = LoginStore()
     
     /// This function will make the login request
     ///
@@ -22,7 +18,7 @@ class LoginManager: NSObject {
     ///        - callback: A callback  with the parameters `result` having the token and `error` which is a ServerError object.
     ///        - body: Dictionary object containing email and password.
     func performLogin(_ body: Dictionary<String, String>?, callback:@escaping (_ result:String?, _ error:ServerError?) -> Void) {
-        LoginStore.sharedInstance.performLogin(body) {
+        store.performLogin(body) {
             (result, error) in
             if error == nil {
                 callback(result,nil)

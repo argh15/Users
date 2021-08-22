@@ -7,20 +7,16 @@
 
 import Foundation
 
-class HomeStore: NSObject {
+class HomeStore {
     
-    static let sharedInstance = HomeStore()
-    
-    private override init() {
-        super.init()
-    }
+    let service = NetworkService()
     
     /// This function fetches the users data from the service.
     ///
     /// Calls the service class function to fetch the users data from the API. Receives the response containing the users data, if error occurs, receives the Server Error with error message.
     /// - Parameter callback: A callback  with the parameters `result`, having the UserModel data and `error` which is a ServerError object.
     func fetchUsers(callback:@escaping (_ result: UserModel?, _ error:ServerError?) -> Void) {
-        NetworkService.sharedInstance.get(withBaseURL: NetworkConstants.usersAPI) {
+        service.get(withBaseURL: NetworkConstants.usersAPI) {
             (result, error) in
             let decoder = JSONDecoder()
             if error == nil {

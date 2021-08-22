@@ -7,14 +7,8 @@
 
 import Foundation
 
-class NetworkService: NSObject {
-    
-    static let sharedInstance = NetworkService()
-    
-    private override init() {
-        super.init()
-    }
-    
+class NetworkService {
+        
     /// This is the GET call through URL Session
     ///
     /// - Parameters:

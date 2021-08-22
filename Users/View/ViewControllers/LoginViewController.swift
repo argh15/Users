@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
+
     func observe(viewModel: LoginViewModel) {
         kvoToken = viewModel.observe(\.isLoginSuccess, options: .new) { (_, change) in
             guard let isSuccess = change.newValue else { return }
@@ -37,7 +38,7 @@ class LoginViewController: UIViewController {
                 self.openHomeScreen()
             } else {
                 ActivityIndicator.sharedInstance.hideActivityIndicator()
-                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: viewModel.errorMessage, actionTitle: StringConstants.okTitle)
+                AlertView.sharedInstance.showAlert(header: StringConstants.loginFailedHeader, message: self.viewModel.errorMessage , actionTitle: StringConstants.okTitle)
             }
         }
     }

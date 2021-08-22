@@ -12,6 +12,7 @@ class LoginViewModel: NSObject {
     @objc dynamic var isLoginSuccess: Bool = false
     var token = ""
     var errorMessage = ""
+    var manager = LoginManager()
     
     /// This function will make the login request
     ///
@@ -22,17 +23,17 @@ class LoginViewModel: NSObject {
     ///
     /// - Parameter body: Dictionary object containing email and password.
     func performLogin(_ loginBody: Dictionary<String, String>?) {
-        LoginManager.sharedInstance.performLogin(loginBody) { [self]
+        manager.performLogin(loginBody) { [weak self]
             (result, error)  in
             if error == nil {
                 if let token = result {
-                    self.token = token
+                    self?.token = token
                     UserDefaults.standard.setIsLoggedIn(true)
-                    isLoginSuccess = true
+                    self?.isLoginSuccess = true
                 }
             } else {
-                errorMessage = error?.errorMessage ?? StringConstants.defaultError
-                isLoginSuccess = false
+                self?.errorMessage = error?.errorMessage ?? StringConstants.defaultError
+                self?.isLoginSuccess = false
             }
         }
     }
